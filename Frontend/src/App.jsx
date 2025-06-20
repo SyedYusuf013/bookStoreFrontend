@@ -64,10 +64,10 @@ const App = () => {
           toastOptions={{
             className: "max-w-xs md:max-w-sm text-sm",
             success: {
-              style: { background: "white", color: "black" }, // you can adjust
+              style: { background: "white", color: "black" }, 
             },
             error: {
-              style: { background: "white", color: "black" }, // adjust accordingly
+              style: { background: "white", color: "black" }, 
             },
           }}
         >

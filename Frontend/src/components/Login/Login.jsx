@@ -1,13 +1,103 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/authProvider";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const { authUser, setAuthUser } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
   const [currState, setCurrState] = useState("Login");
 
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSignup = async (data) => {
+    const signUpInfo = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const res = await axios.post(
+        "http://localhost:4001/user/signup",
+        signUpInfo
+      );
+      if (res.data) {
+        console.log(res.data);
+        toast.success("Signup Successfully");
+        reset();
+        localStorage.setItem("Users", JSON.stringify(res.data.user));
+        setAuthUser(res.data.user);
+        const redirectTo = localStorage.getItem("redirectAfterLogin");
+        if (redirectTo) {
+          localStorage.removeItem("redirectAfterLogin");
+          navigate(redirectTo);
+          toast.success("Redirected to your destination");
+        } else {
+          navigate("/");
+        }
+      }
+    } catch (err) {
+      if (err.response) {
+        console.log(err);
+        toast.error("Signup Error: " + err.response.data.message);
+      }
+    }
+  };
+
+  const handleLogin = async (data) => {
+    const logInInfo = {
+      email: data.email,
+      password: data.password,
+    };
+    try {
+      const res = await axios.post(
+        "http://localhost:4001/user/login",
+        logInInfo
+      );
+      if (res.data) {
+        console.log(res.data);
+        toast.success("LoggedIn Successfully");
+        reset();
+        localStorage.setItem("Users", JSON.stringify(res.data.user));
+        localStorage.setItem("Token", res.data.token);
+        setAuthUser(res.data.user);
+
+        // Redirect back
+        const redirectTo = localStorage.getItem("redirectAfterLogin");
+        if (redirectTo) {
+          localStorage.removeItem("redirectAfterLogin");
+          navigate(redirectTo);
+          toast.success("Redirected to your destination");
+        } else {
+          navigate("/");
+        }
+      }
+    } catch (err) {
+      if (err.response) {
+        console.log(err);
+        toast.error("Login Error: " + err.response.data.message);
+      }
+    }
+  };
+
+  const onSubmit = (data) => {
+    if (currState === "Sign Up") {
+      handleSignup(data);
+    } else {
+      handleLogin(data);
+    }
+  };
 
   return (
     <>

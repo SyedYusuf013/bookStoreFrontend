@@ -1,20 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Mission from "../../assets/b1.jpg";
 import ChooseUs from "../../assets/b2.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import toast from "react-hot-toast";
 
 function Aboutus() {
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    AOS.init({
-      duration: 1000, // Animation duration
-      offset: 200, // Offset (distance from top to trigger animation)
-    });
+    // Check screen size on load
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Tailwind md: breakpoint is 768px
+    };
+
+    handleResize(); // check on mount
+    window.addEventListener("resize", handleResize); // check on resize
+
+    AOS.init({ duration: 1000, offset: 200 });
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleClickMail = () => {
-    alert("Right now we don't have a business mail");
+    toast.success("Right now we don't have a business mail");
   };
 
   return (
@@ -24,14 +34,17 @@ function Aboutus() {
           <div className="  px-4 items-center justify-center text-center">
             <h1
               className=" relative md:text-4xl text-2xl mb-8 font-bold after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:transform after:-translate-x-1/2 after:w-10 after:h-1 dark:after:bg-red-500 after:bg-red-500 aos-box"
-              data-aos="fade-up"
+              data-aos="fade-down"
             >
               About Us
             </h1>
 
             {/* Introduction */}
             <section className="mb-16 ">
-              <p className="text-xl leading-relaxed aos-box" data-aos="fade-up">
+              <p
+                className="text-xl leading-relaxed aos-box"
+                data-aos="fade-down"
+              >
                 <span className="font-medium text-red-500">BookVerse</span> is
                 more than just a bookstore — it’s an online platform created to
                 ignite a love for reading, make books accessible to all, and
@@ -89,16 +102,16 @@ function Aboutus() {
             {/* Our Mission */}
             <section className="mb-16 flex flex-col md:flex-row items-center gap-8 text-start">
               {/* Text */}
-              <div className="md:w-1/2">
+              <div className="md:w-1/2 ">
                 <h2
                   className="text-xl font-semibold mb-2 text-red-500 aos-box"
-                  data-aos="fade-up"
+                  data-aos={isMobile ? "fade-up" : "fade-right"}
                 >
                   Our Mission
                 </h2>
                 <p
                   className="text-md leading-relaxed aos-box"
-                  data-aos="fade-up"
+                  data-aos={isMobile ? "fade-up" : "fade-right"}
                 >
                   At <span className="font-medium text-red-500">BookVerse</span>
                   , our mission is to make reading a habit for everyone. We
@@ -107,35 +120,35 @@ function Aboutus() {
                 <ul className="list-disc ml-6 mt-2 text-lg space-y-1 text-left">
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-right"}
                   >
                     Offer a vast and diverse collection of books for all age
                     groups and interests
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-right"}
                   >
                     Promote literacy, creativity, and self-improvement through
                     accessible reading
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-right"}
                   >
                     Support budding authors and lesser-known publishers by
                     featuring their work
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-right"}
                   >
                     Leverage technology to enhance the browsing and buying
                     experience
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-right"}
                   >
                     Encourage thoughtful discussions and community engagement
                     around books
@@ -143,12 +156,12 @@ function Aboutus() {
                 </ul>
               </div>
               {/* Image */}
-              <div className="md:w-1/2 ">
+              <div className="md:w-1/2">
                 <img
                   src={Mission}
                   alt="Mission"
-                  className="w-[500px] h-[450px] ml-36  rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 aos-box"
-                  data-aos="fade-up"
+                  className="md:w-[500px] md:h-[450px] md:ml-36  rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 aos-box"
+                  data-aos={isMobile ? "fade-up" : "fade-left"}
                 />
               </div>
             </section>
@@ -159,14 +172,14 @@ function Aboutus() {
               <div className="md:w-1/2">
                 <h2
                   className="text-xl font-semibold mb-2 text-red-500 aos-box"
-                  data-aos="fade-up"
+                  data-aos={isMobile ? "fade-up" : "fade-left"}
                 >
                   Why Choose Us?
                 </h2>
                 <ul className="list-disc ml-6 text-lg space-y-3">
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-left"}
                   >
                     <span className="font-normal">Wide Selection:</span> From
                     fiction and non-fiction to academic and self-help books —
@@ -174,7 +187,7 @@ function Aboutus() {
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-left"}
                   >
                     <span className="font-normal">User-Friendly Platform:</span>{" "}
                     Clean, responsive, and intuitive design makes book discovery
@@ -182,21 +195,21 @@ function Aboutus() {
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-left"}
                   >
                     <span className="font-normal">Secure Checkout:</span> Smooth
                     and safe payment options ensure complete peace of mind.
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-left"}
                   >
                     <span className="font-normal">Fast Delivery:</span> Get your
                     books delivered quickly no matter where you live in India.
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-left"}
                   >
                     <span className="font-normal">
                       Reader-Centric Approach:
@@ -206,7 +219,7 @@ function Aboutus() {
                   </li>
                   <li
                     className="[&::marker]:text-red-500 aos-box"
-                    data-aos="fade-up"
+                    data-aos={isMobile ? "fade-up" : "fade-left"}
                   >
                     <span className="font-normal">24/7 Support:</span> Our team
                     is always here to help you with your queries and orders.
@@ -218,8 +231,8 @@ function Aboutus() {
                 <img
                   src={ChooseUs}
                   alt="Why Choose Us"
-                  className="w-[500px] h-[450px] rounded-lg shadow-md  transition-transform duration-300 transform hover:scale-105 aos-box"
-                  data-aos="fade-up"
+                  className="md:w-[500px] md:h-[450px] rounded-lg shadow-md  transition-transform duration-300 transform hover:scale-105 aos-box"
+                  data-aos={isMobile ? "fade-up" : "fade-right"}
                 />
               </div>
             </section>
@@ -238,7 +251,7 @@ function Aboutus() {
                 directly at{" "}
                 <Link
                   to="/contactus"
-                  className="text-blue-500 hover:underline cursor-pointer"
+                  className="text-blue-500 hover:underline cursor-pointer "
                   onClick={handleClickMail}
                 >
                   syedyusuf@booksystem.com

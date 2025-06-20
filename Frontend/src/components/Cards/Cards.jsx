@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { toast } from "react-hot-toast";
 
 function Cards({ item }) {
   useEffect(() => {
@@ -9,6 +10,10 @@ function Cards({ item }) {
       offset: 200, // Offset (distance from top to trigger animation)
     });
   }, []);
+
+  const handleClick = () => {
+    toast.success("This feature is coming soon.");
+  };
 
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = 30;
@@ -58,9 +63,12 @@ function Cards({ item }) {
             </p>
             <div className="card-actions flex justify-between">
               <div className="badge badge-outline">${item.price}</div>
-              <div className="badge badge-outline hover:bg-black cursor-pointer hover:text-white duration-200 dark:hover:bg-slate-800">
+              <button
+                onClick={handleClick}
+                className="badge badge-outline hover:bg-black cursor-pointer hover:text-white duration-200 dark:hover:bg-slate-800"
+              >
                 Buy Now
-              </div>
+              </button>
             </div>
           </div>
         </div>

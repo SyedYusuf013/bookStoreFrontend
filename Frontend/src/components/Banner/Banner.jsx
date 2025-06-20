@@ -1,17 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import banner from "../../../src/assets/b3.jpg";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Mail } from "lucide-react";
 
 const Banner = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    AOS.init({
-      duration: 1000, // Animation duration
-      offset: 200, // Offset (distance from top to trigger animation)
-    });
+    // Check screen size on load
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Tailwind md: breakpoint is 768px
+    };
+
+    handleResize(); // check on mount
+    window.addEventListener("resize", handleResize); // check on resize
+
+    AOS.init({ duration: 1000, offset: 200 });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
+  useEffect(() => {
+    AOS.refresh();
+  }, [isMobile]);
 
   const {
     register,
@@ -25,11 +41,17 @@ const Banner = () => {
         <div className=" w-full md:w-1/2 md:mt-32 mt-12 md:order-1 order-2 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className=" space-y-12">
-              <h1 className=" text-4xl font-bold aos-box" data-aos="fade-up">
+              <h1
+                className=" text-4xl font-bold aos-box"
+                data-aos={isMobile ? "fade-up" : "fade-right"}
+              >
                 Hello, welcome here to learn something{" "}
                 <span className=" text-red-500">New Everyday!!!</span>
               </h1>
-              <p className=" text-xl aos-box" data-aos="fade-up">
+              <p
+                className=" text-xl aos-box"
+                data-aos={isMobile ? "fade-up" : "fade-right"}
+              >
                 Explore a diverse range of books that cater to every kind of
                 reader. Whether you're drawn to gripping thrillers, heartwarming
                 romances, thought-provoking non-fiction, or inspiring
@@ -39,7 +61,7 @@ const Banner = () => {
 
               <label
                 className="input w-full h-12 flex items-center gap-2 px-3 py-2 border rounded-md validator dark:bg-slate-950 dark:text-white bg-base-200 focus-within:outline-none focus-within:ring-0 focus-within:shadow-none aos-box"
-                data-aos="fade-up"
+                data-aos={isMobile ? "fade-up" : "fade-right"}
               >
                 <input
                   type="email"
@@ -56,36 +78,25 @@ const Banner = () => {
                     This field is required
                   </span>
                 )}
-                <svg
-                  className="h-[1em] opacity-50"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <g
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2.5"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                  </g>
-                </svg>
+                <Mail className="h-5 opacity-50" />
               </label>
               <div className="validator-hint hidden">
                 Enter valid email address
               </div>
             </div>
-            <div className="flex justify-between aos-box" data-aos="fade-up">
+            <div className="flex justify-between ">
               <Link
                 to="/courses"
-                className="bg-black dark:bg-slate-950 text-white px-5 py-3 rounded-md hover:bg-slate-800 duration-300 cursor-pointer transition-transform transform hover:scale-105"
+                className="bg-black dark:bg-slate-950 text-white px-5 py-3 rounded-md hover:bg-slate-800 duration-300 cursor-pointer transition-transform transform hover:scale-105 aos-box"
+                data-aos={isMobile ? "fade-up" : "fade-right"}
               >
                 Get Started
               </Link>
 
-              <button className="bg-black dark:bg-slate-950 text-white px-5 py-3 rounded-md hover:bg-slate-800 duration-300 cursor-pointer transition-transform transform hover:scale-105">
+              <button
+                className="bg-black dark:bg-slate-950 text-white px-5 py-3 rounded-md hover:bg-slate-800 duration-300 cursor-pointer transition-transform transform hover:scale-105 aos-box"
+                data-aos={isMobile ? "fade-up" : "fade-left"}
+              >
                 Connect
               </button>
             </div>
@@ -93,7 +104,7 @@ const Banner = () => {
         </div>
         <div
           className=" w-full md:w-1/2 md:mt-32 mt-12 md:order-2 order-1 aos-box"
-          data-aos="fade-up"
+          data-aos={isMobile ? "fade-up" : "fade-left"}
         >
           <img
             src={banner}

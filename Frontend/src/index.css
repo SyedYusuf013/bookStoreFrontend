@@ -4,17 +4,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @plugin "daisyui";
 
-/* @source "./public/*.{html,php,erb}";
-@plugin "./daisyui.js";
-
-/* Optional for custom themes – Docs: https://daisyui.com/docs/themes/#how-to-add-a-new-custom-theme */
-/* @plugin "./daisyui-theme.js"{
-  /* custom theme here} */
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
 body {
   font-family: "Poppins", sans-serif;
+}
+
+@keyframes toast-progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-toast-progress {
+  animation: toast-progress linear forwards;
 }

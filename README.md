@@ -17,6 +17,7 @@ Sources: Frontend/src/main.jsx, Frontend/package.json, Backend/package.json
 *Application Entry Points*
 
 The system initialization follows a specific bootstrap sequence starting from the React application entry point.
+
 ![image](https://github.com/user-attachments/assets/2f54595c-f745-4318-8768-8f49bfc7390a)
 
 Sources: Frontend/src/main.jsx:8-16

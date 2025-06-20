@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.jpg";
 import Login from "./../Login/Login";
 import Logout from "../Logout/Logout";
-import { useAuth } from "../../context/authProvider";
+import { useAuth } from "../../context/AuthProvider";
 import toast from "react-hot-toast";
 import { AlignJustify, Moon, Sun } from "lucide-react";
 

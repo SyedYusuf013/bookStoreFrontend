@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useAuth } from "../../context/authProvider";
+import { useAuth } from "../../context/AuthProvider";
 
 function Login() {
   const navigate = useNavigate();

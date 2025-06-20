@@ -5,7 +5,7 @@ import Course from "./pages/Course";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import { Toaster } from "react-hot-toast";
-import { useAuth } from "./context/authProvider";
+import { useAuth } from "./context/AuthProvider";
 import { CheckCircle, LoaderCircle, XCircle } from "lucide-react";
 import Layout from "./components/Layout/Layout";
 
